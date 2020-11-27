@@ -18,6 +18,11 @@ include("holiday.php");
 $w_rus=[1 => "Понедельник",2 => "Вторник",3 => "Среда",4 => "Четверг",5 => "Пятница",6 => "Суббота",7 => "Воскресенье"];
 $m_rus=[1 => "Январь",2 => "Февраль",3 => "Март",4 => "Апрель",5 => "Май",6 => "Июнь",7 => "Июль",8 => "Август",9 => "Сентябрь",10 => "Октябрь",11 => "Ноябрь",12 => "Декабрь"];
 $i=1;
+while(file_exists("m".$_GET["id_ind"]."/mess".$i.".php"))
+	{
+	include("m".$_GET["id_ind"]."/mess".$i.".php");
+	$i++;
+	}
 
 ?>
 <style>
@@ -122,6 +127,15 @@ for($i=1;$i<=cal_days_in_month(CAL_GREGORIAN, $m, $Y);$i++)
 	 echo "</td><td class=td_in></td><td class=td_in></td></tr>";
 	 echo "<tr><td class=td_in></td><td class=td_in>".$i."</td><td class=td_in></td></tr>";
 	 echo "<tr><td class=td_in colspan=3>";
+	 if(isset($_SESSION["mess"][$str_d."_".$str_m."_".$str_Y]))
+		 foreach($_SESSION["mess"][$str_d."_".$str_m."_".$str_Y] as $ms)
+			{
+			 echo "<div style=\"width:5px;height:5px;float:left;background-color:";
+			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo "gray";else echo "red";
+			 echo ";\"
+					title=\"".$ms["body"]."\n".$ms["from"]."\n\"></div>
+					<div style=\"width:2px;height:5px;float:left;background-color:#F8E391;\"></div>";
+			}
 	 echo "</td></tr>";
 	 echo "</table></td>";
 	 if($wd==7)echo "</tr>";

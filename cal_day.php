@@ -1,6 +1,44 @@
 ﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
+<script>
+function getXmlHttp(){
+  var xmlhttp;
+  try {
+    xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+  } catch (e) {
+    try {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    } catch (E) {
+      xmlhttp = false;
+    }
+  }
+  if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+    xmlhttp = new XMLHttpRequest();
+  }
+  return xmlhttp;
+}
+function MySH(NameEl,NamePHP,str)
+{ 
+//alert(str+'&'+AdrEl+'=>'+NameEl);
 
+var xmlhttp = getXmlHttp();  
+
+xmlhttp.onreadystatechange=function()
+  {document.title=xmlhttp.readyState+'=>'+xmlhttp.status;
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {if(NameEl!='') {
+	                 document.getElementById(NameEl).innerHTML=xmlhttp.responseText;
+					}
+    }
+  }
+if (str == '')
+   {xmlhttp.open("GET",NamePHP,true);
+   }
+   else{xmlhttp.open("GET",NamePHP+"?"+str,true); }
+  
+xmlhttp.send();
+}
+</script>
 <?php
 if(!isset($_GET["id_ind"])||!isset($_GET["c_Y"])||!isset($_GET["c_m"])||!isset($_GET["c_d"]))die("Нет данных!");
 $d=$_GET["c_d"];
@@ -12,6 +50,11 @@ include("holiday.php");
 $w_rus=[1 => "Понедельник",2 => "Вторник",3 => "Среда",4 => "Четверг",5 => "Пятница",6 => "Суббота",7 => "Воскресенье"];
 $m_rus=[1 => "Января",2 => "Февраля",3 => "Марта",4 => "Апреля",5 => "Мая",6 => "Июня",7 => "Июля",8 => "Августа",9 => "Сентября",10 => "Октября",11 => "Ноября",12 => "Декабря"];
 $i=1;
+while(file_exists("m".$_GET["id_ind"]."/mess".$i.".php"))
+	{
+	include("m".$_GET["id_ind"]."/mess".$i.".php");
+	$i++;
+	}
 
 ?>
 <style>
@@ -91,6 +134,14 @@ echo "</th></tr>";
 	 $str_Y=$Y;
 	 if(isset($_SESSION["holiday"][$str_d."_".$str_m]))echo "<tr><td class=th_td><img src=\"hol.png\" style=\"width:20;padding-right:20;\">".$_SESSION["holiday"][$str_d."_".$str_m]."</td></tr>";
 
+	 if(isset($_SESSION["mess"][$str_d."_".$str_m."_".$str_Y]))
+		 foreach($_SESSION["mess"][$str_d."_".$str_m."_".$str_Y] as $k_ms => $ms)
+			{
+			 echo "<tr><td class=th_td>".$ms["body"]." <img ";
+			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo " src=\"ok.png\" ";else echo " src=\"in_work.png\" ";
+			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo " title=\"Отменить выполнение.\" ";else echo " title=\"Отметить о выполнении.\" ";
+			 echo " style=\"width:25;float:right;margin-right:5px;\" onclick=\"MySH('','mess_ok.php','id_ind=".$_GET["id_ind"]."&s_d=".$str_d."_".$str_m."_".$str_Y."&id_s=".$k_ms."');if(this.src.includes('ok.png'))this.src='in_work.png';else this.src='ok.png';\"></td></tr>";
+			}
 	
 echo "</table>";
 ?>
