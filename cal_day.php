@@ -1,4 +1,4 @@
-﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 <script>
 function getXmlHttp(){
@@ -46,6 +46,7 @@ $m=$_GET["c_m"];
 $Y=$_GET["c_Y"];
 error_reporting(0);
 session_start();
+print_r($_SESSION);
 include("holiday.php");
 $w_rus=[1 => "Понедельник",2 => "Вторник",3 => "Среда",4 => "Четверг",5 => "Пятница",6 => "Суббота",7 => "Воскресенье"];
 $m_rus=[1 => "Января",2 => "Февраля",3 => "Марта",4 => "Апреля",5 => "Мая",6 => "Июня",7 => "Июля",8 => "Августа",9 => "Сентября",10 => "Октября",11 => "Ноября",12 => "Декабря"];
@@ -140,7 +141,7 @@ echo "</th></tr>";
 			 echo "<tr><td class=th_td>".$ms["body"]." <img ";
 			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo " src=\"ok.png\" ";else echo " src=\"in_work.png\" ";
 			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo " title=\"Отменить выполнение.\" ";else echo " title=\"Отметить о выполнении.\" ";
-			 echo " style=\"width:25;float:right;margin-right:5px;\" onclick=\"MySH('','mess_ok.php','id_ind=".$_GET["id_ind"]."&s_d=".$str_d."_".$str_m."_".$str_Y."&id_s=".$k_ms."');if(this.src.includes('ok.png'))this.src='in_work.png';else this.src='ok.png';\"></td></tr>";
+			 echo " style=\"width:25;float:right;margin-right:5px;\" onclick=\"MySH('','mess_ok.php','id_ind=".$_GET["id_ind"]."&s_d=".$str_d."_".$str_m."_".$str_Y."&id_s=".$k_ms."&tm=".$ms["body"]."');if(this.src.includes('ok.png'))this.src='in_work.png';else this.src='ok.png';\"></td></tr>";
 			}
 	
 echo "</table>";
