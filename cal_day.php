@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 <script>
 function getXmlHttp(){
@@ -46,7 +46,6 @@ $m=$_GET["c_m"];
 $Y=$_GET["c_Y"];
 error_reporting(0);
 session_start();
-print_r($_SESSION);
 include("holiday.php");
 $w_rus=[1 => "Понедельник",2 => "Вторник",3 => "Среда",4 => "Четверг",5 => "Пятница",6 => "Суббота",7 => "Воскресенье"];
 $m_rus=[1 => "Января",2 => "Февраля",3 => "Марта",4 => "Апреля",5 => "Мая",6 => "Июня",7 => "Июля",8 => "Августа",9 => "Сентября",10 => "Октября",11 => "Ноября",12 => "Декабря"];

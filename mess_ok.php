@@ -1,4 +1,4 @@
-﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
+﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 
 <?php
 session_start();
@@ -27,5 +27,28 @@ foreach($_SESSION["mess"] as $k_ms => $ms)
 $str.=" ?>";
 echo $str;
 file_put_contents("m".$_GET["id_ind"]."/mess1.php", $str);
+
+
+print_r($_GET);
+
+$Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
+
+if(!$Link)die('Нет подключения к БД!');
+
+@mysql_query('SET NAMES utf8');
+
+mysql_select_db('u464554');
+
+$_GET["id"]=1;
+	$q=mysql_query("select max(id)+1 as mxid from CAV_pac");
+while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$_GET["id"]=$str["mxid"];}
+ 
+//echo "insert into CAV_pac (id,id_ind_pac,id_doc,time)
+		   //values(".$_GET["id"].",".$_GET["id_ind_pac"].",
+			  //'".$_GET["id_doc"]."','".$_GET["tm"]."')";
+
+$q=mysql_query("insert into CAV_pac (id,id_ind_pac,id_doc,time)
+		   values(".$_GET["id"].",".$_SESSION["id"].",
+			  '".$_GET["id_ind"]."','".$_GET["tm"]."')");			  
 
 ?>
