@@ -1,8 +1,8 @@
-﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 
 <?php
-if(!isset($_GET["id_ind"]))die("Нет данных!");
+if(!isset($_GET["id_doc"]))die("Нет данных!");
 error_reporting(0);
 session_start();
 foreach($_SESSION["mess"] as $k_ms => $ms)
@@ -18,9 +18,9 @@ include("holiday.php");
 $w_rus=[1 => "Понедельник",2 => "Вторник",3 => "Среда",4 => "Четверг",5 => "Пятница",6 => "Суббота",7 => "Воскресенье"];
 $m_rus=[1 => "Январь",2 => "Февраль",3 => "Март",4 => "Апрель",5 => "Май",6 => "Июнь",7 => "Июль",8 => "Август",9 => "Сентябрь",10 => "Октябрь",11 => "Ноябрь",12 => "Декабрь"];
 $i=1;
-while(file_exists("m".$_GET["id_ind"]."/mess".$i.".php"))
+while(file_exists("m".$_GET["id_doc"]."/mess".$i.".php"))
 	{
-	include("m".$_GET["id_ind"]."/mess".$i.".php");
+	include("m".$_GET["id_doc"]."/mess".$i.".php");
 	$i++;
 	}
 
@@ -112,8 +112,12 @@ for($i=1;$i<$wd;$i++)echo "<td class=th_td></td>";
 for($i=1;$i<=cal_days_in_month(CAL_GREGORIAN, $m, $Y);$i++)
 	{$wd=date("w",strtotime($Y."-".$m."-".$i));
 	 if($wd==0)$wd=7;
+	 if ($_GET["us"]=="pac")
 	 echo "<td  class=th_td 
-			onclick=\"window.location.replace('cal_day.php?id_ind=".$_GET["id_ind"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
+			onclick=\"window.location.replace('cal_day.php?id_doc=".$_GET["id_doc"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
+			>";
+			else echo "<td  class=th_td 
+			onclick=\"window.location.replace('tabledoc.php?id_doc=".$_GET["id_doc"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
 			>";
 	 echo "<table style=\"width:100%;height:100%;";
 	 if (($i==$cur_d)&&($m==$cur_m)&&($Y==$cur_Y))

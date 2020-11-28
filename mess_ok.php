@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
+﻿﻿﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 
 <?php
 session_start();
@@ -11,12 +11,12 @@ foreach($_SESSION["mess"] as $k_ms => $ms)
 	unset($_SESSION["mess"][$k_ms]);
 	}
 unset($_SESSION["mess"]);
-if(!isset($_GET["id_ind"])||!isset($_GET["s_d"])||!isset($_GET["id_s"]))die("Нет данных!");
+if(!isset($_GET["id_doc"])||!isset($_GET["s_d"])||!isset($_GET["id_s"]))die("Нет данных!");
 
 
-if(!is_dir("m".$_GET["id_ind"]))mkdir("m".$_GET["id_ind"]);
+if(!is_dir("m".$_GET["id_doc"]))mkdir("m".$_GET["id_doc"]);
 
-if(file_exists("m".$_GET["id_ind"]."/mess1.php"))include("m".$_GET["id_ind"]."/mess1.php");
+if(file_exists("m".$_GET["id_doc"]."/mess1.php"))include("m".$_GET["id_doc"]."/mess1.php");
 $_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["from"]=$_SESSION["id"];
 if(isset($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"])&&($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]==1))$_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]=0;else $_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]=1;
 $str="<?php ";
@@ -26,7 +26,7 @@ foreach($_SESSION["mess"] as $k_ms => $ms)
 			$str.="$"."_SESSION[\"mess\"][\"".$k_ms."\"][\"".$kk_ms."\"][\"".$kkk_ms."\"]=\"".$mmms."\";";
 $str.=" ?>";
 echo $str;
-file_put_contents("m".$_GET["id_ind"]."/mess1.php", $str);
+file_put_contents("m".$_GET["id_doc"]."/mess1.php", $str);
 
 
 print_r($_GET);
@@ -39,6 +39,8 @@ if(!$Link)die('Нет подключения к БД!');
 
 mysql_select_db('u464554');
 
+if(isset($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"])&&($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]==1))
+{
 $_GET["id"]=1;
 	$q=mysql_query("select max(id)+1 as mxid from CAV_pac");
 while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$_GET["id"]=$str["mxid"];}
@@ -47,8 +49,9 @@ while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$_GET["id"]=$
 		   //values(".$_GET["id"].",".$_GET["id_ind_pac"].",
 			  //'".$_GET["id_doc"]."','".$_GET["tm"]."')";
 
-$q=mysql_query("insert into CAV_pac (id,id_ind_pac,id_doc,time)
+$q=mysql_query("insert into CAV_pac (id,id_ind_pac,id_doc,time,time_way)
 		   values(".$_GET["id"].",".$_SESSION["id"].",
-			  '".$_GET["id_ind"]."','".$_GET["tm"]."')");			  
-
+			  '".$_GET["id_doc"]."','".$_GET["tm"]."','".$_GET["tm"]."')");
+} else $q=mysql_query("delete from CAV_pac
+		   where id_ind_pac=".$_SESSION["id"]." and id_doc='".$_GET["id_doc"]."' and time='".$_GET["tm"]."'");
 ?>

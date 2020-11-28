@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 <script>
 function getXmlHttp(){
@@ -40,7 +40,7 @@ xmlhttp.send();
 }
 </script>
 <?php
-if(!isset($_GET["id_ind"])||!isset($_GET["c_Y"])||!isset($_GET["c_m"])||!isset($_GET["c_d"]))die("Нет данных!");
+if(!isset($_GET["id_doc"])||!isset($_GET["c_Y"])||!isset($_GET["c_m"])||!isset($_GET["c_d"]))die("Нет данных!");
 $d=$_GET["c_d"];
 $m=$_GET["c_m"];
 $Y=$_GET["c_Y"];
@@ -50,9 +50,9 @@ include("holiday.php");
 $w_rus=[1 => "Понедельник",2 => "Вторник",3 => "Среда",4 => "Четверг",5 => "Пятница",6 => "Суббота",7 => "Воскресенье"];
 $m_rus=[1 => "Января",2 => "Февраля",3 => "Марта",4 => "Апреля",5 => "Мая",6 => "Июня",7 => "Июля",8 => "Августа",9 => "Сентября",10 => "Октября",11 => "Ноября",12 => "Декабря"];
 $i=1;
-while(file_exists("m".$_GET["id_ind"]."/mess".$i.".php"))
+while(file_exists("m".$_GET["id_doc"]."/mess".$i.".php"))
 	{
-	include("m".$_GET["id_ind"]."/mess".$i.".php");
+	include("m".$_GET["id_doc"]."/mess".$i.".php");
 	$i++;
 	}
 
@@ -118,7 +118,7 @@ if(isset($_GET["c_Y"]))$Y=$_GET["c_Y"];
 $wd=date("w",strtotime($Y."-".$m."-01"));
 if($wd==0)$wd=7;
 echo "<table style=\"border-radius: 10px;border-spacing: 0;table-layout:fixed;width:430px;\">
-<tr><th class=th_td style=\"border-radius: 10px;\" onclick=\"window.location.replace('index.php?id_ind=".$_GET["id_ind"]."&m=".$m."&Y=".$Y."');\" ><img src=\"pr.png\" style=\"position:relative;right:50;top:5;width:25;\">";
+<tr><th class=th_td style=\"border-radius: 10px;\" onclick=\"window.location.replace('index.php?id_doc=".$_GET["id_doc"]."&m=".$m."&Y=".$Y."');\" ><img src=\"pr.png\" style=\"position:relative;right:50;top:5;width:25;\">";
 $str_get="";
 foreach($_GET as $kget => $get)
 	if(($kget!=m)&&($kget!=Y))
@@ -140,7 +140,7 @@ echo "</th></tr>";
 			 echo "<tr><td class=th_td>".$ms["body"]." <img ";
 			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo " src=\"ok.png\" ";else echo " src=\"in_work.png\" ";
 			 if(isset($ms["w_ok"])&&($ms["w_ok"]==1))echo " title=\"Отменить выполнение.\" ";else echo " title=\"Отметить о выполнении.\" ";
-			 echo " style=\"width:25;float:right;margin-right:5px;\" onclick=\"MySH('','mess_ok.php','id_ind=".$_GET["id_ind"]."&s_d=".$str_d."_".$str_m."_".$str_Y."&id_s=".$k_ms."&tm=".$ms["body"]."');if(this.src.includes('ok.png'))this.src='in_work.png';else this.src='ok.png';\"></td></tr>";
+			 echo " style=\"width:25;float:right;margin-right:5px;\" onclick=\"MySH('','mess_ok.php','id_doc=".$_GET["id_doc"]."&s_d=".$str_d."_".$str_m."_".$str_Y."&id_s=".$k_ms."&tm=".$ms["body"]."');if(this.src.includes('ok.png'))this.src='in_work.png';else this.src='ok.png';\"></td></tr>";
 			}
 	
 echo "</table>";
