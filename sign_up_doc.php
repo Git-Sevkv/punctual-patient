@@ -1,5 +1,6 @@
 ﻿﻿﻿<h1 style="position: absolute;left: 1%;top:1%;">Выберите врача</h1>
 <?php
+session_start();
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
 if(!$Link)die('Нет подключения к БД!');
@@ -7,19 +8,20 @@ if(!$Link)die('Нет подключения к БД!');
 @mysql_query('SET NAMES utf8');
 
 mysql_select_db('u464554');
-
-$q=mysql_query("SELECT CAV_doctor.* ,
-		CAV_individ.fam
+echo "SELECT CAV_doctor.*
 		from CAV_doctor 
-		LEFT JOIN CAV_individ ON CAV_individ.id=CAV_doctor.id_ind_doc");
+		where id_ind_doc=".$_SESSION["id"]."";
+$q=mysql_query("SELECT CAV_doctor.*
+		from CAV_doctor 
+		where id_ind_doc=".$_SESSION["id"]."");
 while ($qq[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
 
-echo "<select onclick=\"document.getElementById('fr_sp').src='calendar/index.php?us=pac&id_doc='+this.value;\">";
+echo "<select onclick=\"document.getElementById('fr_sp').src='calendar/index.php?id_doc='+this.value;\">";
 foreach($qq as $r)
-	if($r["fam"]!="")
+	if($r["doctor"]!="")
 		{
 		echo "<option value=".$r["id"].">";
-		echo $r["doctor"]." ".$r["fam"];
+		echo $r["doctor"];
 		echo "</option>";
 		}
 echo "</select>";

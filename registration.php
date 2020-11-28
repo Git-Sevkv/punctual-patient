@@ -1,4 +1,4 @@
-﻿﻿﻿<?php
+﻿﻿﻿﻿﻿<?php
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
 if(!$Link)die('Нет подключения к БД!');
@@ -162,4 +162,11 @@ echo "
 <br>
 ";
 
+if(isset($_SESSION["id"]))
+echo "
+<br>
+<br>
+<a href=\"sign_up_doc.php\">Список пациентов</a>
+<br>
+";
 ?>
