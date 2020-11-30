@@ -1,34 +1,5 @@
-﻿﻿﻿﻿﻿<?php
-$Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
+﻿﻿﻿﻿﻿﻿﻿﻿<?php
 
-if(!$Link)die('Нет подключения к БД!');
-
-@mysql_query('SET NAMES utf8');
-
-mysql_select_db('u464554');
-
-$q=mysql_query("select * from CAV_individ");
-while ($qq[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
-echo "<table style=\"display:none;position: absolute;left: 2;top: 20%; width: 50%;\">";
-foreach($qq as $r)
-	if($r["id"]!="")
-		{
-		echo "<tr>";
-		echo "
-		      <td>".$r["fam"]."</td>
-			  <td>".$r["name"]."</td>
-			  <td>".$r["s_name"]."</td>
-			  <td>".$r["date_of_brth"]."</td>
-			  <td>".$r["login"]."</td>
-			  <td>".$r["password"]."</td>
-			  ";
-		}	  
-echo "<tr><td colspan=4>
-	  </td>
-      </tr>
-      ";
-
-echo "</table>";
 echo "
 	  <form id=f_ind action=\"individ_edit.php\" method=get style=\"display:none;\"position: absolute;left: 2;\"\">
 	  <h1 style=\"position: left: 5%;top: 100;\"
@@ -70,7 +41,7 @@ if(isset($_GET["exit"]))
 	 unset($_SESSION["date_of_brth"]);
 	 unset($_SESSION["login"]);
 	 unset($_SESSION["password"]);
-	 unset($_SESSION);
+	 
 	}//очистка сессии
 $Link=mysqli_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi','u464554');
 
@@ -91,23 +62,40 @@ if(isset($_GET["new_user"]))
 								");
 		
 	}
-$q=mysqli_query($Link,"select * from CAV_individ 
-						where login like '".$_GET["login"]."'
-							and password like '".$_GET["password"]."'	
-						");
-unset($qq);
-while ($qq[]=mysqli_fetch_array($q,MYSQLI_ASSOC)){}
-if($qq[0]["login"]!="")
-{ echo "Здравствуйте ".$qq[0]["name"]." ".$qq[0]["s_name"]."<form action=\"registration.php\" method=get>
-<p><input type=submit name=exit value=Выйти>
-</p>
-</form>";
-		 $_SESSION["fam"]=$qq[0]["fam"];
-		 $_SESSION["name"]=$qq[0]["name"];
-		 $_SESSION["s_name"]=$qq[0]["s_name"];
-		 $_SESSION["id"]=$qq[0]["id"];
-		 }
-//print_r($_SESSION);		 
+if(isset($_GET["login"]))
+	{unset($_SESSION["id"]);
+	 unset($_SESSION["fam"]);
+	 unset($_SESSION["name"]);
+	 unset($_SESSION["s_name"]);
+	 unset($_SESSION["date_of_brth"]);
+	 unset($_SESSION["login"]);
+	 unset($_SESSION["password"]);
+	 
+	$q=mysqli_query($Link,"select *, (select count(*) from CAV_doctor where CAV_individ.id=CAV_doctor.id_ind_doc) as c_doc from CAV_individ 
+							where login like '".$_GET["login"]."'
+								and password like '".$_GET["password"]."'	
+							");
+	unset($qq);
+	while ($qq[]=mysqli_fetch_array($q,MYSQLI_ASSOC)){}
+	
+	if($qq[0]["login"]!="")
+			{ 
+			 $_SESSION["fam"]=$qq[0]["fam"];
+			 $_SESSION["name"]=$qq[0]["name"];
+			 $_SESSION["s_name"]=$qq[0]["s_name"];
+			 $_SESSION["id"]=$qq[0]["id"];
+			 $_SESSION["c_doc"]=$qq[0]["c_doc"];
+			 }
+	
+	}
+	
+if(isset($_SESSION["id"]))
+	{ echo "Здравствуйте ".$_SESSION["name"]." ".$_SESSION["s_name"]."<form action=\"registration.php\" method=get>
+	<p><input type=submit name=exit value=Выйти>
+	</p>
+	</form>";	
+	}
+	 
 ?>
 <h1 style="position: absolute;left: 50%;top:1%;"></h1>
 <?php
@@ -162,11 +150,15 @@ echo "
 <br>
 ";
 
-if(isset($_SESSION["id"]))
+if((isset($_SESSION["c_doc"]))&&($_SESSION["c_doc"]>0))
 echo "
 <br>
 <br>
 <a href=\"sign_up_doc.php\">Список пациентов</a>
-<br>
-";
+<br>";
+
+
+
+
+
 ?>

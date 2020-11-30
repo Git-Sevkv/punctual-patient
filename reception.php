@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<table>
+﻿﻿﻿﻿﻿<table>
 <tr>
 <th align=center style="width:200;height:100;border-style:solid;border-width:1;background-color: #77dd77";><h2>Специальность</h2></th>
   <th align=center style="width:200;height:100;border-style:solid;border-width:1;background-color: #77dd77";><h2>ФИО врача</h2></th>
@@ -37,3 +37,6 @@ foreach ($qq as $r)
 ?>
 
 </table>
+
+  <a href="http://agniinfo.ru/st2016/Chernaya/hospital/registration.php"
+  style="position: absolute; top: 3; left: 150">Вернуться назад</a>
