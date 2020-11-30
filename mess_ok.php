@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
+﻿﻿﻿﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 
 <?php
 session_start();
@@ -48,10 +48,14 @@ while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$_GET["id"]=$
 //echo "insert into CAV_pac (id,id_ind_pac,id_doc,time)
 		   //values(".$_GET["id"].",".$_GET["id_ind_pac"].",
 			  //'".$_GET["id_doc"]."','".$_GET["tm"]."')";
-
-$q=mysql_query("insert into CAV_pac (id,id_ind_pac,id_doc,time,time_way)
+//file_put_contents("test.php","insert into CAV_pac (id,id_ind_pac,id_doc,date_p,time,time_way)
+		   //values(".$_GET["id"].",".$_SESSION["id"].",
+			 // '".$_GET["id_doc"]."','".$_GET["s_d"]."','".$_GET["tm"]."','".$_GET["tm"]."')");
+			 
+$s_d=explode("_",$_GET["s_d"]);
+$q=mysql_query("insert into CAV_pac (id,id_ind_pac,id_doc,date_p,time,time_way)
 		   values(".$_GET["id"].",".$_SESSION["id"].",
-			  '".$_GET["id_doc"]."','".$_GET["tm"]."','".$_GET["tm"]."')");
+			  '".$_GET["id_doc"]."','".$s_d[2]."-".$s_d[1]."-".$s_d[0]."','".$_GET["tm"]."','".$_GET["tm"]."')");
 } else $q=mysql_query("delete from CAV_pac
 		   where id_ind_pac=".$_SESSION["id"]." and id_doc='".$_GET["id_doc"]."' and time='".$_GET["tm"]."'");
 ?>
