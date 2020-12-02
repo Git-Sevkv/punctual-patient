@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿<table>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<table>
 <tr>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>ФИО пациента</h2></th>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>Время приёма</h2></th>
@@ -95,6 +95,32 @@ foreach ($qq as $r)
 			else $findfirst=1;
 		
 }
+print_r($_GET);
+
+if((isset($_GET["btn_doc"]))&&($_GET["btn_doc"]=="Подтвердить"))
+	{
+	$q=mysql_query("SELECT * from CAV_pac where id_doc=".$_GET["id_doc"]." and date_p='".date("Y-m-d")."' and time_after is null order by time");
+
+unset($qq);				
+while ($qq[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
+foreach ($qq as $r)
+	if ($r["id"]!="")	
+		{
+				 $ttstr=explode(":",$r["time_way"]);
+				 if(!isset($ttstr[2]))$ttstr[2]=0;
+				 $ttt=$ttstr[0]*60*60+$ttstr[1]*60+$ttstr[2]+$_GET["break_time"]*60;
+
+				echo "update CAV_pac 
+				set time_way='".floor($ttt/3600).":".floor(($ttt-(floor($ttt/3600)*60*60))/60).":".($ttt % 60)."'
+				where id=".$r["id"]."";
+				 
+				 $q=mysql_query("update CAV_pac 
+                   set time_way='".floor($ttt/3600).":".floor(($ttt-(floor($ttt/3600)*60*60))/60).":".($ttt % 60)."'
+					where id=".$r["id"]."");
+		}	
+	}
+	
+
 $q=mysql_query("SELECT CAV_pac.* ,
 				CAV_individ.fam,CAV_individ.name
 				from CAV_pac 
@@ -136,10 +162,14 @@ foreach ($qq as $r)
 		echo "</td>
 	  </tr>";
 		}
-	
+
 }
+echo	"<form action=\"tabledoc.php\" method=get>
+	   <p style=\"position:absolute;right: 200;\">Я ушёл на<input id=break_time name=break_time>минут</p>
+	   <input id=id_doc style=\"display:none;\" name=id_doc value=".$_GET["id_doc"].">
+	   <p style=\"position:absolute;bottom: 20; right: 150;\"><input id=btn_doc name=btn_doc type=submit value=Подтвердить></p>
+	  </form>";
+
 ?>
 
 </table>
-
-<p style="position:absolute;right: 200;">Я ушёл на <input style="width: 30;"></input> минут.<button>Подтвердить</button></p>

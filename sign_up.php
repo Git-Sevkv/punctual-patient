@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿<h1 style="position: absolute;left: 1%;top:1%;font-style: italic;text-decoration:underline;">Выберите врача:</h1>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<h1 style="position: absolute;left: 1%;top:1%;font-style: italic;text-decoration:underline;">Выберите врача:</h1>
 <?php
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
@@ -7,10 +7,7 @@ if(!$Link)die('Нет подключения к БД!');
 @mysql_query('SET NAMES utf8');
 
 mysql_select_db('u464554');
-echo "SELECT CAV_doctor.* ,
-		CAV_individ.fam,CAV_doctor.n_kab,CAV_individ.login,CAV_individ.password
-		from CAV_doctor 
-		LEFT JOIN CAV_individ ON CAV_individ.id=CAV_doctor.id_ind_doc";
+
 $q=mysql_query("SELECT CAV_doctor.* ,
 		CAV_individ.fam,CAV_doctor.n_kab,CAV_individ.login,CAV_individ.password
 		from CAV_doctor 
@@ -34,6 +31,6 @@ echo "</select>";
 ></iframe>
 
 <a href="http://agniinfo.ru/st2016/Chernaya/hospital/registration.php"
-  style="position: absolute; top: 30; left: 350"><button style="background-color: #f5e8d0;width: 130px; height: 40px;border-radius: 10px;">Вернуться назад</button><img src="strelka.png" width="40"
+  style="position: absolute; top: 30; left: 350"><button style="background-color: #f5e8d0;width: 130px; height: 40px;border-radius: 10px;font-style: italic;">Вернуться назад</button><img src="strelka.png" width="40"
  onmouseover="this.width=50;"
  onmouseout="this.width=40;"></a>

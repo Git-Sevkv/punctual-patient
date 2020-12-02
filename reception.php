@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿<table>
+﻿﻿﻿﻿﻿﻿﻿<table>
 <tr>
 <th align=center style="width:200;height:100;border-style:solid;border-width:1;background-color: #77dd77";><h2>Специальность</h2></th>
   <th align=center style="width:200;height:100;border-style:solid;border-width:1;background-color: #77dd77";><h2>ФИО врача</h2></th>
@@ -30,7 +30,7 @@ foreach ($qq as $r)
 	echo "<tr>
   <td align=center style=\"width:200;height:100;border-style:solid;border-width:1;background-color: #f5e8d0;\";><h3>".$r["doctor"]."</h3></td>
   <td align=center style=\"width:200;height:100;border-style:solid;border-width:1;background-color: #f5e8d0;\";><h3>".$r["fam"]." ".$r["name"]."</h3></td>
-  <td align=center style=\"width:200;height:100;border-style:solid;border-width:1;background-color: #f5e8d0;\";><h3>".$r["time"]."</h3></td>
+  <td align=center style=\"width:200;height:100;border-style:solid;border-width:1;background-color: #f5e8d0;\";><h3>".$r["time_way"]."</h3></td>
   </tr>";
 	
 }
@@ -38,5 +38,7 @@ foreach ($qq as $r)
 
 </table>
 
-  <a href="http://agniinfo.ru/st2016/Chernaya/hospital/registration.php"
-  style="position: absolute; top: 3; left: 150">Вернуться назад</a>
+ <a href="http://agniinfo.ru/st2016/Chernaya/hospital/registration.php"
+  style="position: absolute; top: 30; left: 700px"><button style="background-color: #f5e8d0;width: 130px; height: 40px;border-radius: 10px;font-style: italic;">Вернуться назад</button><img src="strelka.png" width="40"
+ onmouseover="this.width=50;"
+ onmouseout="this.width=40;"></a>
