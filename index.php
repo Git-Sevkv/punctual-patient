@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 
 <?php
@@ -94,6 +94,7 @@ foreach($_GET as $kget => $get)
 $YY=$Y;
 $mm=$m-1;if($mm==0){$YY=$YY-1;$mm=12;}
 if($str_get=="")$str_get="Y=".$YY."&m=".$mm;else $str_get.="&Y=".$YY."&m=".$mm;
+
 echo "<a href=\"index.php?".$str_get."\"><img src=\"pr.png\" style=\"position:relative;right:50;top:5;width:25;\"></a>";
 echo " ".$m_rus[$m]." ";
 if($Y!=$cur_Y)echo $Y." ";
@@ -106,7 +107,7 @@ $mm=$m+1;if($mm>12){$YY=$YY+1;$mm=1;}
 if($str_get=="")$str_get="Y=".$YY."&m=".$mm;else $str_get.="&Y=".$YY."&m=".$mm;
 echo "<a href=\"index.php?".$str_get."\"><img src=\"next.png\" style=\"position:relative;left:50;top:5;width:25;\"></a>";
 echo "</th></tr>
-<tr><th class=th_td>Пн.</th><th class=th_td>Вт.</th><th class=th_td>Ср.</th><th class=th_td>Чт.</th><th class=th_td>Пт.</th><th class=th_td>Сбб.</th><th class=th_td>Вск.</th></tr>
+<tr><th class=th_td>Пн.</th><th class=th_td>Вт.</th><th class=th_td>Ср.</th><th class=th_td>Чт.</th><th class=th_td>Пт.</th><th class=th_td>Сб.</th><th class=th_td>Вс.</th></tr>
 <tr>";
 for($i=1;$i<$wd;$i++)echo "<td class=th_td></td>";
 for($i=1;$i<=cal_days_in_month(CAL_GREGORIAN, $m, $Y);$i++)
@@ -114,10 +115,10 @@ for($i=1;$i<=cal_days_in_month(CAL_GREGORIAN, $m, $Y);$i++)
 	 if($wd==0)$wd=7;
 	 if ($_GET["us"]=="pac")
 	 echo "<td  class=th_td 
-			onclick=\"window.location.replace('cal_day.php?id_doc=".$_GET["id_doc"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
+			onclick=\"window.location.replace('cal_day.php?us=pac&id_doc=".$_GET["id_doc"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
 			>";
 			else echo "<td  class=th_td 
-			onclick=\"window.location.replace('tabledoc.php?id_doc=".$_GET["id_doc"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
+			onclick=\"window.location.replace('tabledoc.php?us=pac&id_doc=".$_GET["id_doc"]."&c_d=".$i."&c_m=".$m."&c_Y=".$Y."');\"
 			>";
 	 echo "<table style=\"width:100%;height:100%;";
 	 if (($i==$cur_d)&&($m==$cur_m)&&($Y==$cur_Y))

@@ -1,17 +1,18 @@
-﻿<?php
+﻿﻿﻿<?php
 
 echo "
 	  <form id=f_ind action=\"individ_edit.php\" method=get style=\"display:none;\"position: absolute;left: 2;\"\">
-	  <h1 style=\"position: left: 5%;top: 100;\"
+	  <h1 style=\"position: left: 5%;top: 100; text-decoration: underline;\"
 	  
-	  >Зарегистрироваться</h1> <p>Фамилия<input id=fam name=fam></p>
-	   <p>Имя<input id=name name=name></p>
-	   <p>Отчество<input id=s_name name=s_name></p>
-	   <p>Дата рождения<input id=date_of_brth name=date_of_brth type=date></p>
-	   <p>Логин<input id=login name=login></p>
-	   <p>Пароль<input id=password name=password type=password></p>
-	   <p><input id=btn_e name=btn_e type=submit value=Зарегистрироваться> 
-	   <span onclick=\"
+	  >Регистрация:</h1> <p>Фамилия<input id=fam name=fam></p>
+	   <p>Имя:<input id=name name=name></p>
+	   <p>Отчество:<input id=s_name name=s_name></p>
+	   <p>Дата рождения:<input id=date_of_brth name=date_of_brth type=date></p>
+	   <p>Логин:<input id=login name=login></p>
+	   <p>Пароль:<input id=password name=password type=password></p>
+	   <p><input style=\"background-color: #77dd77;border-radius: 20px;width: 200px; height: 40px;font-size: 20;\" id=btn_e name=btn_e type=submit value=Зарегистрироваться> 
+	   <span  style=\"background-color: Red;font-size: 20;width: 100px; height: 50px;border-radius: 10px;\";
+	   onclick=\"
 	   
 	    document.getElementById('login').value='';
 		document.getElementById('password').value='';
@@ -20,7 +21,7 @@ echo "
 	   
 	   \">
 	  
-	      <a
+	      <a 
 	      onclick=\"
 	          document.getElementById('f_ind').style.display='none';\"
 	          
@@ -119,7 +120,7 @@ text-decoration: none;
 if(!isset($_SESSION["id"]))
 echo "
 <form id=aut_z action=\"registration.php\" method=get>
-<h1>Авторизация</h1>
+<h1  style=\"text-decoration: underline;\">Авторизация:</h1>
 <p>Логин:<input name=login></p>
 <p>Пароль:<input name=password type=password></p>
 <p><input style=\"background-color: #77dd77;border-radius: 20px;width: 80px; height: 40px;font-size: 20;\" type=submit value=Войти>

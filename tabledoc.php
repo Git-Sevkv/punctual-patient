@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<table>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<table>
 <tr>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>ФИО пациента</h2></th>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>Время приёма</h2></th>
@@ -95,7 +95,7 @@ foreach ($qq as $r)
 			else $findfirst=1;
 		
 }
-print_r($_GET);
+
 
 if((isset($_GET["btn_doc"]))&&($_GET["btn_doc"]=="Подтвердить"))
 	{
