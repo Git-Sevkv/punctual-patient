@@ -1,4 +1,5 @@
-﻿﻿﻿<?php
+﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
 
 echo "
 	  <form id=f_ind action=\"individ_edit.php\" method=get style=\"display:none;\"position: absolute;left: 2;\"\">
@@ -177,7 +178,7 @@ if((isset($_SESSION["c_doc"]))&&($_SESSION["c_doc"]>0))
 	<br>
 	";
 	
-if(isset($_SESSION["id"]))
+if((isset($_SESSION["id"]))&&($_SESSION["id"]==6))
 echo "
 <br>
 <br>

@@ -1,4 +1,9 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<h1 style="position: absolute;left: 26;top:1;">Список ближайших пациентов</h1>
+﻿﻿<h1 style="position: absolute;left: 26;top:1;">Список ближайших пациентов</h1>
+<script>
+setInterval(function() {
+ window.location = "table_pers.php";
+}, 7000);
+</script>
 <table  style="position: absolute; top: 60;">
 <tr>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>ФИО пациента</h2></th>
@@ -33,21 +38,22 @@ while ($qq[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
 	foreach ($qq as $r)
 {
 	if ($r["id"]!="")
+	{
 	echo "<tr>
 		<td align=center style=\"width:200;height:40;border-style:solid;border-width:1;background-color: #f5e8d0;\"><h3>".$r["fam"]." ".$r["name"]."</h3></td>
 		<td align=center style=\"width:200;height:40;border-style:solid;border-width:1;background-color: #f5e8d0;\"><h3>".$r["time_way"]."</h3></td>
 		<td align=center style=\"width:200;height:40;border-style:solid;border-width:1;background-color: #f5e8d0;\">";
 		if($r["time_arrived"]=="")
 				echo "<form action=\"table_pers.php\" method=get>
-						<input name=btn_beg type=submit value=\"Зашел в больницу\">
+						<input name=btn_place type=submit value=\"Зашел в больницу\">
+						<input name=time_arrived style=\"display:none;\" value=".date("H:i:s")." >
 						<input name=id style=\"display:none;\" value=".$r["id"]." >
-						<input name=id_doc style=\"display:none;\" value=".$r["id_doc"]." >
-						<input name=c_Y style=\"display:none;\" value=".$_GET["c_Y"]." >
-						<input name=c_m style=\"display:none;\" value=".$_GET["c_m"]." >
-						<input name=c_d style=\"display:none;\" value=".$_GET["c_d"]." >
+
 						</form>";
+						else echo $r["time_arrived"];
 		echo "</td>
   </tr>";
+	}
 }		
 
 
@@ -56,4 +62,7 @@ while ($qq[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
   </table>
 
 <a href="http://agniinfo.ru/st2016/Chernaya/hospital/registration.php"
-  style="position: absolute; bottom: 20; left: 500"><button style="background-color: #f5e8d0;width: 130px; height: 40px;border-radius: 10px;font-style: italic;">Вернуться назад</button></a>
+  style="position: absolute;left: 650;top: 40"><button style="background-color: #f5e8d0;width: 130px; height: 40px;border-radius: 10px;font-style: italic;">Вернуться назад
+  </button><img src="strelka.png" width="40"
+   onmouseover="this.width=50;"
+ onmouseout="this.width=40;"></a>

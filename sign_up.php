@@ -1,4 +1,5 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<h1 style="position: absolute;left: 1%;top:1%;font-style: italic;text-decoration:underline;">Выберите врача:</h1>
+﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+<h1 style="position: absolute;left: 1%;top:1%;font-style: italic;text-decoration:underline;">Выберите врача:</h1>
 <?php
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 

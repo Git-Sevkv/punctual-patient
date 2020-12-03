@@ -1,13 +1,24 @@
+﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿<?php
+session_start();
+?>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<script>
+setInterval(function() {
+  window.location = 'tabledoc.php?id_doc=<?php echo $_GET["id_doc"]; ?>&c_Y=<?php echo $_GET["c_Y"]; ?>&c_m=<?php echo $_GET["c_m"]; ?>&c_d=<?php echo $_GET["c_d"]; ?>&break_time=<?php echo $_GET["break_time"]; ?>';
+}, 10000);
+</script>
+
 ﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<table>
 <tr>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>ФИО пациента</h2></th>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>Время приёма</h2></th>
   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>Информация о приёме</h2></th>
+   <th align=center style="width:200;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>Время прибытия в больницу</h2></th>
  
   </tr>
   
   <?php
-session_start();
+
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
 if(!$Link)die('Нет подключения к БД!');
@@ -160,14 +171,15 @@ foreach ($qq as $r)
 						</form>";
 				else echo $r["time_after"];
 		echo "</td>
+		<td align=center style=\"width:200;height:40;border-style:solid;border-width:1;background-color: #f5e8d0;\"><h3>".$r["time_arrived"]."</h3></td>
 	  </tr>";
 		}
 
 }
 echo	"<form action=\"tabledoc.php\" method=get>
-	   <p style=\"position:absolute;right: 200;\">Я ушёл на<input id=break_time name=break_time>минут</p>
+	   <p style=\"position:absolute;right: 200;\">Я ушёл на<input id=break_time name=break_time>минут.</p>
 	   <input id=id_doc style=\"display:none;\" name=id_doc value=".$_GET["id_doc"].">
-	   <p style=\"position:absolute;bottom: 20; right: 150;\"><input id=btn_doc name=btn_doc type=submit value=Подтвердить></p>
+	   <p style=\"position:absolute;top: 25; right: 100;\"><input id=btn_doc name=btn_doc type=submit value=Подтвердить></p>
 	  </form>";
 
 ?>
