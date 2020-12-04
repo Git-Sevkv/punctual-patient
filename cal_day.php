@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿﻿﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 <script>
 function getXmlHttp(){
@@ -38,6 +38,11 @@ if (str == '')
   
 xmlhttp.send();
 }
+
+setInterval(function() {
+  window.location = 'cal_day.php?id_doc=<?php echo $_GET["id_doc"]; ?>&c_Y=<?php echo $_GET["c_Y"]; ?>&c_m=<?php echo $_GET["c_m"]; ?>&c_d=<?php echo $_GET["c_d"]; ?>';
+}, 10000);
+
 </script>
 <?php
 if(!isset($_GET["id_doc"])||!isset($_GET["c_Y"])||!isset($_GET["c_m"])||!isset($_GET["c_d"]))die("Нет данных!");

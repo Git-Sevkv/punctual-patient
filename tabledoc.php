@@ -1,4 +1,4 @@
-﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 ﻿<?php
 session_start();
 ?>
@@ -71,11 +71,9 @@ foreach ($qq as $r)
 }
 if(isset($_GET["btn_beg"]))
 {
-	echo "update CAV_pac 
-                    set time_way='".date("H:i:s")."'
-					where id=".$_GET["id"];
+
 	$q=mysql_query("update CAV_pac 
-                    set time_way='".date("H:i:s")."'
+                    set time_way='".date("H:i:s")."', time_way_fact='".date("H:i:s")."'
 					where id=".$_GET["id"]);
 					
 					$q=mysql_query("SELECT * from CAV_pac where id=".$_GET["id"]);

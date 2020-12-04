@@ -1,8 +1,8 @@
-﻿﻿<h1 style="position: absolute;left: 26;top:1;">Список ближайших пациентов</h1>
+﻿﻿﻿<h1 style="position: absolute;left: 26;top:1;">Список ближайших пациентов</h1>
 <script>
 setInterval(function() {
  window.location = "table_pers.php";
-}, 7000);
+}, 1000);
 </script>
 <table  style="position: absolute; top: 60;">
 <tr>
@@ -20,13 +20,16 @@ if(!$Link)die('Нет подключения к БД!');
 
 mysql_select_db('u464554');
 
-$q=mysql_query("SELECT CAV_pac.*,
+$q=mysql_query("SELECT t1.*,
 				CAV_individ.fam, CAV_individ.name,CAV_individ.s_name
-				from CAV_pac 
-				LEFT JOIN CAV_individ ON CAV_individ.id=CAV_pac.id_ind_pac 
-				where time_after is null and date_p='".date("Y-m-d")."' order by time
+				from CAV_pac t1 
+				LEFT JOIN CAV_individ ON CAV_individ.id=t1.id_ind_pac 
+				where time_way_fact is null and date_p='".date("Y-m-d")."' 
+				and time_way=(select min(time_way) from CAV_pac t2
+				where t1.id_doc=t2.id_doc and t2.time_way_fact is null and t2.date_p='".date("Y-m-d")."' )
+				order by time
 		");
-		
+
 if(isset($_GET["btn_place"]))
 {
 	$q=mysql_query("update CAV_pac 
