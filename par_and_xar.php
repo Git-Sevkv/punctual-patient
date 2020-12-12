@@ -1,4 +1,4 @@
-﻿  <?php
+﻿﻿  <?php
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
 if(!$Link)die('Нет подключения к БД!');
@@ -9,7 +9,7 @@ mysql_select_db('u464554');
 
 $q=mysql_query("SELECT CAV_xar.*,CAV_param.name from CAV_xar
 				left join CAV_param on CAV_param.id=CAV_xar.id_par
-				where id_parent is NULL");
+				where id_parent is NULL and id_ind=".$_GET["id_ind"]);
 unset($qqp);				
 while ($qqp[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
 
@@ -47,9 +47,7 @@ echo"</td></tr>";
 $i_n++;
 	}
 	
-$q=mysql_query("select * from CAV_param
-
-				");
+$q=mysql_query("select * from CAV_param");
 unset($qqp);				
 while ($qqp[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
 

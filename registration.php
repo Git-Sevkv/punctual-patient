@@ -1,4 +1,15 @@
-﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./js/jquery.js"></script>
+	<script src="./js/core.js"></script>
+	<script src="./js/lib-typedarrays.js"></script>
+	<script src="./js/x64-core.js"></script>
+	<script src="./js/enc-utf16.js"></script>
+	<script src="./js/enc-base64.js"></script>
+	<script src="./js/md5.js"></script>
+	<script src="./js/sha1.js"></script>
+	<script src="./js/sha256.js"></script>
+	<script src="./js/sha224.js"></script>
+	<script src="./js/sha512.js"></script>
 <?php
 
 echo "
@@ -9,8 +20,12 @@ echo "
 	   <p>Имя:<input id=name name=name></p>
 	   <p>Отчество:<input id=s_name name=s_name></p>
 	   <p>Дата рождения:<input id=date_of_brth name=date_of_brth type=date></p>
-	   <p>Логин:<input id=login name=login></p>
-	   <p>Пароль:<input id=password name=password type=password></p>
+	   <p>СНИЛС:<input id=login name=login maxlength=\"13\" pattern=\"[0-9]{3}-[0-9]{3}-[0-9]{5}\" placeholder=\"___-___-_____\"
+				onkeyup=\"if((this.value.length==3)||(this.value.length==7))this.value+='-';\"
+				
+				
+				><span onclick=\"document.getElementById('login').value='';\">Очистить поле</span></p>
+	   <p>Пароль:<input style=\"display:none;\" id=password name=password><input onkeyup=\"document.getElementById('password').value=CryptoJS.SHA512(this.value);\" type=password></p>
 	   <p><input style=\"background-color: #77dd77;border-radius: 20px;width: 200px; height: 40px;font-size: 20;\" id=btn_e name=btn_e type=submit value=Зарегистрироваться> 
 	   <span  style=\"background-color: Red;font-size: 20;width: 100px; height: 50px;border-radius: 10px;\";
 	   onclick=\"
@@ -65,11 +80,11 @@ if(isset($_GET["new_user"]))
 		
 		$qn=mysqli_query($Link,"insert into CAV_individ
 								(id, fam, name, s_name, login, password)
-								VALUES (".$new_id.",'".$_GET["fam"]."','".$_GET["name"]."','".$_GET["s_name"]."','".$_GET["login"]."','".$_GET["password"]."')
+								VALUES (".$new_id.",'".$_GET["fam"]."','".$_GET["name"]."','".$_GET["s_name"]."','".$_GET["login1"]."','".$_GET["password1"]."')
 								");
 		
 	}
-if(isset($_GET["login"]))
+if(isset($_GET["login1"]))
 	{unset($_SESSION["id"]);
 	 unset($_SESSION["fam"]);
 	 unset($_SESSION["name"]);
@@ -78,10 +93,10 @@ if(isset($_GET["login"]))
 	 unset($_SESSION["login"]);
 	 unset($_SESSION["password"]);
 	 unset($_SESSION["c_doc"]);
-	 
+	//echo "<script>alert('".hash("sha512", $_GET["password1"])."');</script>"
 	$q=mysqli_query($Link,"select *, (select count(*) from CAV_doctor where CAV_individ.id=CAV_doctor.id_ind_doc) as c_doc from CAV_individ 
-							where login like '".$_GET["login"]."'
-								and password like '".$_GET["password"]."'	
+							where login like '".$_GET["login1"]."'
+								and password like '".hash("sha512", $_GET["password1"])."'	
 							");
 	unset($qq);
 	while ($qq[]=mysqli_fetch_array($q,MYSQLI_ASSOC)){}
@@ -122,8 +137,12 @@ if(!isset($_SESSION["id"]))
 echo "
 <form id=aut_z action=\"registration.php\" method=get>
 <h1  style=\"text-decoration: underline;\">Авторизация:</h1>
-<p>Логин:<input name=login></p>
-<p>Пароль:<input name=password type=password></p>
+<p>СНИЛС:<input id=login1 maxlength=\"13\" name=login1 pattern=\"[0-9]{3}-[0-9]{3}-[0-9]{5}\" placeholder=\"___-___-_____\"
+				onkeyup=\"if((this.value.length==3)||(this.value.length==7))this.value+='-';\"
+				
+				
+				><span onclick=\"document.getElementById('login1').value='';\">Очистить поле</span></p>
+<p>Пароль:<input style=\"display:none;\" id=password1 name=password1><input onkeyup=\"document.getElementById('password1').value=CryptoJS.SHA512(this.value);\" type=password></p>
 <p><input style=\"background-color: #77dd77;border-radius: 20px;width: 80px; height: 40px;font-size: 20;\" type=submit value=Войти>
 <span onclick=\"
 	   
@@ -187,5 +206,17 @@ echo "
 style=\"background-color: #77dd77;width: 130px; height: 80px;border-radius: 10px;\";><a href=\"calendar/table_pers.php\"><h2>Ближайшие пациенты</h2></a></button>
 <br>
 ";	
+
+
+if(isset($_SESSION["id"]))
+echo "
+<br>
+<br>
+<h1 onmouseover=\"style.opacity=0.7;\";
+ onmouseout=\"style.opacity=1;\";
+style=\"background-color: #77dd77;width: 130px; height: 80px;border-radius: 10px;\";><a href=\"par_and_xar.php?id_ind=".$_SESSION["id"]."\">Мед.карта</a></h1>
+<br>
+";
+
 
 ?>

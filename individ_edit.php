@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 
 <?php
 
@@ -16,7 +16,7 @@ if($_GET["btn_e"]=="Зарегистрироваться")
    {$_GET["id"]=1;
 	$q=mysql_query("select max(id)+1 as mxid from CAV_individ");
 	while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$_GET["id"]=$str["mxid"];}
-
+	$_GET["password"] = hash("sha512", $_GET["password"]);
 echo "insert into CAV_individ (id,fam,name,s_name,date_of_brth,login,password) 
 		   values(".$_GET["id"].",
 		   ".$_GET["fam"].",
