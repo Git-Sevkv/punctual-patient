@@ -25,7 +25,7 @@ for($i=0;$i<$_GET["n_t"];$i++)
 	$ttt=explode(":",$_GET["t_s"]);
 	echo $ttt[0]."*60+".$ttt[1]."+".$i."*".$_GET["dt"]."=".($ttt[0]*60+$ttt[1]+$i*$_GET["dt"])."<br>";
 	$ttt_new=$ttt[0]*60+$ttt[1]+$i*$_GET["dt"];
-	$_SESSION["mess"][$_GET["s_d"]][$i]["from"]="5";
+	$_SESSION["mess"][$_GET["s_d"]][$i]["from"]="";
 	if(($ttt_new % 60-0)<10-0)
 		$_SESSION["mess"][$ddd[2]."_".$ddd[1]."_".$ddd[0]][$i]["body"]=floor($ttt_new / 60).":0".($ttt_new % 60);
 	else $_SESSION["mess"][$ddd[2]."_".$ddd[1]."_".$ddd[0]][$i]["body"]=floor($ttt_new / 60).":".($ttt_new % 60);
