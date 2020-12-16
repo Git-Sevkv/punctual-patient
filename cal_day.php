@@ -19,7 +19,7 @@ function getXmlHttp(){
 }
 function MySH(NameEl,NamePHP,str)
 { 
-//alert(str+'&'+AdrEl+'=>'+NameEl);
+//alert(str+'&'+NamePHP+'=>'+NameEl);
 
 var xmlhttp = getXmlHttp();  
 

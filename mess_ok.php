@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
+﻿﻿﻿﻿﻿﻿﻿﻿﻿<meta http-equiv="Content-Type" content="text/css; charset=utf-8">
 
 <?php
 session_start();
@@ -14,6 +14,7 @@ unset($_SESSION["mess"]);
 if(!isset($_GET["id_doc"])||!isset($_GET["s_d"])||!isset($_GET["id_s"]))die("Нет данных!");
 
 
+
 if(!is_dir("m".$_GET["id_doc"]))mkdir("m".$_GET["id_doc"]);
 
 if(file_exists("m".$_GET["id_doc"]."/mess1.php"))include("m".$_GET["id_doc"]."/mess1.php");
@@ -21,7 +22,6 @@ $_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["from"]=$_SESSION["id"];
 if(isset($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"])&&($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]==1))
 	$_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]=0;
 	else $_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["w_ok"]=1;
-
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
 if(!$Link)die('Нет подключения к БД!');
@@ -31,10 +31,19 @@ if(!$Link)die('Нет подключения к БД!');
 mysql_select_db('u464554');
 
 //Машинное обучение и прогнозирование
-
+$tt_per=10;//Время для первичного осмотра
+$q=mysql_query("select * from CAV_pac where CAV_pac.id_doc=".$_GET["id_doc"]." and CAV_pac.id_ind_pac=".$_SESSION["id"]." and vipisan=0");
+unset($qqp);
+while ($qqp[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
+foreach($qqp as $rp)
+	if($rp["id"]!="")
+		{$tt_per=0;}
+	
 $q=mysql_query("select * from CAV_pac where CAV_pac.id_doc=".$_GET["id_doc"]."");
 unset($qqp);
 while ($qqp[]=mysql_fetch_array($q,MYSQL_ASSOC)){}
+
+
 
 foreach($qqp as $rp)
 	if($rp["id"]!="")
@@ -55,7 +64,7 @@ foreach($qqp as $rp)
 				}
 
 		}
-$t_rasch=0;	$t_rasch_0=0;	
+$t_rasch=$tt_per;	$t_rasch_0=0;	
 if(isset($_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]+1]))
 	{
 	$tts=explode(":",$_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["body"]);
@@ -69,17 +78,20 @@ foreach($nu as $k_nu => $p_nu)
 	 $s_ch+=$w[$k_nu]*$nu[$k_nu]["time"]/$nu[$k_nu]["n"];
 	 $s_zn+=$w[$k_nu];
 	}
+
 if($s_zn!=0)
-	$t_rasch=$s_ch/$s_zn;	
+	$t_rasch=$s_ch/$s_zn+$tt_per;	
 
 ///Пересчет времени
 
 foreach($_SESSION["mess"][$_GET["s_d"]] as $k_peresch =>  $t_peresch)
 	if($k_peresch>$_GET["id_s"])
-		{$ttn=explode(":",$_SESSION["mess"][$_GET["s_d"]][$k_peresch]["body"]);
-		 $ttn=$ttn+$t_rasch-$t_rasch_0;
+		{
+		 $ttn=explode(":",$_SESSION["mess"][$_GET["s_d"]][$k_peresch]["body"]);
+		 $tttn=$ttn[0]*60+$ttn[1]+$t_rasch-$t_rasch_0;
+		 
 		if($_SESSION["mess"][$_GET["s_d"]][$k_peresch]["from"]=="")
-			$_SESSION["mess"][$_GET["s_d"]][$k_peresch]["body"]=floor($ttn / 60).":".($ttn % 60);
+			$_SESSION["mess"][$_GET["s_d"]][$k_peresch]["body"]=floor($tttn / 60).":".($tttn % 60);
 		}
 ////////////////////	
 	
@@ -110,7 +122,7 @@ while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$_GET["id"]=$
 $s_d=explode("_",$_GET["s_d"]);
 $q=mysql_query("insert into CAV_pac (id,id_ind_pac,id_doc,date_p,time,time_way)
 		   values(".$_GET["id"].",".$_SESSION["id"].",
-			  '".$_GET["id_doc"]."','".$s_d[2]."-".$s_d[1]."-".$s_d[0]."','".$_GET["tm"]."','".$_GET["tm"]."')");
+			  '".$_GET["id_doc"]."','".$s_d[2]."-".$s_d[1]."-".$s_d[0]."','".$_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["body"]."','".$_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["body"]."')");
 } else $q=mysql_query("delete from CAV_pac
-		   where id_ind_pac=".$_SESSION["id"]." and id_doc='".$_GET["id_doc"]."' and time='".$_GET["tm"]."'");
+		   where id_ind_pac=".$_SESSION["id"]." and id_doc='".$_GET["id_doc"]."' and time='".$_SESSION["mess"][$_GET["s_d"]][$_GET["id_s"]]["body"]."'");
 ?>
