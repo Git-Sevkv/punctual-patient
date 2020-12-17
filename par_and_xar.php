@@ -1,4 +1,5 @@
-﻿﻿﻿  <?php
+﻿﻿﻿﻿  <?php
+if(isset($_GET["fam"]))echo "<h1>".$_GET["fam"]." ".$_GET["name"]."</h1>";
 $Link=mysql_connect('u464554.mysql.masterhost.ru','u464554','c_m4sSIOTi');
 
 if(!$Link)die('Нет подключения к БД!');
@@ -7,6 +8,33 @@ if(!$Link)die('Нет подключения к БД!');
 
 mysql_select_db('u464554');
 
+if($_GET["btn_xar"]=="Добавить строку")
+   {$rp["id"]=1;
+	$q=mysql_query("select max(id)+1 as mxid from CAV_xar");
+	while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$rp["id"]=$str["mxid"];}
+
+    $q=mysql_query("insert into CAV_xar (id,id_par,id_ind,val) 
+		   values(".$rp["id"].",
+		   '".$_GET["id_par"]."',
+		   '".$_GET["id_ind"]."',
+			  '".$_GET["val"]."')");
+echo "<h3>Добавлен: ".$_GET["val"]."</h3>";
+   }
+   
+   if($_GET["btn_xar"]=="Добавить в подчинение")
+   {$rp["id"]=1;
+	$q=mysql_query("select max(id)+1 as mxid from CAV_xar");
+	while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$rp["id"]=$str["mxid"];}
+    
+	$q=mysql_query("insert into CAV_xar (id,id_par,id_ind,val,id_parent) 
+		   values(".$rp["id"].",
+		   '".$_GET["id_par"]."',
+		   '".$_GET["id_ind"]."',
+		   '".$_GET["val"]."',
+		   '".$_GET["id_parent"]."')");
+echo "<h3>Добавлен: ".$_GET["val"]."</h3>";
+    } 
+	 
 $q=mysql_query("SELECT CAV_xar.*,CAV_param.name from CAV_xar
 				left join CAV_param on CAV_param.id=CAV_xar.id_par
 				where id_parent is NULL and id_ind=".$_GET["id_ind"]);
@@ -22,8 +50,19 @@ echo"<table>";
 	 echo"<tr><td>".$i_n."</td>";
 	 echo"<td align=center style=\"width:200;height:40;border-style:solid;border-width:1;background-color: #f5e8d0;\">".$rp["name"]."</td>";
 	 echo"<td align=center style=\"width:200;height:40;border-style:solid;border-width:1;background-color: #f5e8d0;\">".$rp["val"]."</td>";
+	 echo "<td><button title=\"Добавить в подчинение\" onclick=\"
+		  document.getElementById('id_parent').value='".$rp["id"]."';
+		  document.getElementById('id_par').value='';
+		  document.getElementById('val').value='';
+		  document.getElementById('btn_xar').value='Добавить в подчинение';
+		  document.getElementById('f_ind').style.display='block';
+		  \">Добавить в подчинение</button></td>";
 	 echo"</tr>";
 	 
+	
+	
+	
+
 	 $q=mysql_query("SELECT CAV_xar.*,CAV_param.name from CAV_xar
 				left join CAV_param on CAV_param.id=CAV_xar.id_par
 				where id_parent=".$rp["id"]);
@@ -59,6 +98,7 @@ echo "<tr><td colspan=4>
 	  <button 
 	  onclick=\"
 	          document.getElementById('id').value='';
+		  document.getElementById('id_parent').value='';
 		  document.getElementById('id_par').value='';
 		  document.getElementById('val').value='';
 		  document.getElementById('btn_xar').value='Добавить строку';
@@ -67,6 +107,7 @@ echo "<tr><td colspan=4>
 	  >Добавить строку</button>
 	  <form id=f_ind action=\"par_and_xar.php\" method=get style=\"display:none;\">
 	   <p style=\"display:none;\">№<input id=id name=id></p>
+	   <p style=\"display:none;\">№ родителя<input id=id_parent name=id_parent></p>
 	   <p style=\"display:none;\">id_ind<input id=id_ind name=id_ind value=\"".$_GET["id_ind"]."\"></p>
 	   <p>Параметр<select id=id_par name=id_par>";
 	   foreach($qqp as $rp)
@@ -90,19 +131,5 @@ echo "</select></p>
       ";
 echo"</table>";
 
-if($_GET["btn_xar"]=="Добавить строку")
-   {$rp["id"]=1;
-	$q=mysql_query("select max(id)+1 as mxid from CAV_xar");
-	while ($str=mysql_fetch_array($q,MYSQL_ASSOC)){if($str["mxid"]!="")$rp["id"]=$str["mxid"];}
- echo "insert into CAV_xar (id,val) 
-		   values(".$rp["id"].",
-		  '".$_GET["id_par"]."',
-			  '".$_GET["val"]."')";
-    $q=mysql_query("insert into CAV_xar (id,id_par,id_ind,val) 
-		   values(".$rp["id"].",
-		   '".$_GET["id_par"]."',
-		   '".$_GET["id_ind"]."',
-			  '".$_GET["val"]."')");
-echo "<h3>Добавлен: ".$_GET["val"]."</h3>";
-    }
+
   ?>

@@ -1,4 +1,4 @@
-﻿<h1 style="position: absolute;left: 4%;top:1%;">Таблица параметров</h1>
+﻿﻿<h1 style="position: absolute;left: 4%;top:1%;">Таблица параметров</h1>
 <table style="position: absolute;left: 1%;top: 15%;">	
 	<tr>
   <th align=center style="width:50;height:40;border-style:solid;border-width:1;background-color: #77dd77";><h2>№</h2></th>

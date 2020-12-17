@@ -1,4 +1,4 @@
-﻿﻿﻿﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+﻿<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="./js/jquery.js"></script>
 	<script src="./js/core.js"></script>
 	<script src="./js/lib-typedarrays.js"></script>
@@ -24,10 +24,10 @@ echo "
 				onkeyup=\"if((this.value.length==3)||(this.value.length==7))this.value+='-';\"
 				
 				
-				><span onclick=\"document.getElementById('login').value='';\">Очистить поле</span></p>
+				><span  style=\"border: 1px solid #000;border-radius: 10px;background-color: #DCDCDC;\" onclick=\"document.getElementById('login').value='';\">Очистить поле</span></p>
 	   <p>Пароль:<input style=\"display:none;\" id=password name=password><input onkeyup=\"document.getElementById('password').value=CryptoJS.SHA512(this.value);\" type=password></p>
 	   <p><input style=\"background-color: #77dd77;border-radius: 20px;width: 200px; height: 40px;font-size: 20;\" id=btn_e name=btn_e type=submit value=Зарегистрироваться> 
-	   <span  style=\"background-color: Red;font-size: 20;width: 100px; height: 50px;border-radius: 10px;\";
+	   <span  style=\"background-color: Red;font-size: 20;width: 100px; height: 50px;border-radius: 10px;border: 2px solid #000;\";
 	   onclick=\"
 	   
 	    document.getElementById('login').value='';
@@ -141,7 +141,7 @@ echo "
 				onkeyup=\"if((this.value.length==3)||(this.value.length==7))this.value+='-';\"
 				
 				
-				><span onclick=\"document.getElementById('login1').value='';\">Очистить поле</span></p>
+				><span style=\"border: 1px solid #000;border-radius: 10px;background-color: #DCDCDC;\" onclick=\"document.getElementById('login1').value='';\">Очистить поле</span></p>
 <p>Пароль:<input style=\"display:none;\" id=password1 name=password1><input onkeyup=\"document.getElementById('password1').value=CryptoJS.SHA512(this.value);\" type=password></p>
 <p><input style=\"background-color: #77dd77;border-radius: 20px;width: 80px; height: 40px;font-size: 20;\" type=submit value=Войти>
 <span onclick=\"
@@ -156,7 +156,7 @@ echo "
 		  document.getElementById('f_ind').style.display='block';
 		  document.getElementById('aut_z').style.display='none';
 		  \"
-		style=\"background-color: #f5e8d0;border-radius: 10px;width: 80px; height: 40px;font-size: 30;\">
+		style=\"border: 2px solid #000;background-color: #f5e8d0;border-radius: 20px;width: 90px; height: 70px; font-size: 30\">
 		  Регистрация
 		  </span>
 		  
@@ -208,15 +208,6 @@ style=\"background-color: #77dd77;width: 130px; height: 80px;border-radius: 10px
 ";	
 
 
-if(isset($_SESSION["id"]))
-echo "
-<br>
-<br>
-<h1 onmouseover=\"style.opacity=0.7;\";
- onmouseout=\"style.opacity=1;\";
-style=\"background-color: #77dd77;width: 130px; height: 80px;border-radius: 10px;\";><a href=\"par_and_xar.php?id_ind=".$_SESSION["id"]."\">Мед.карта</a></h1>
-<br>
-";
 
 
 ?>
